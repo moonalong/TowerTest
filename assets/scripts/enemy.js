@@ -10,10 +10,8 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        health: {
-            default: 100,
-            type: cc.Integer
-        }
+        health: cc.Integer,
+        speed: cc.Integer
     },
 
     onLoad () {
@@ -30,7 +28,7 @@ cc.Class({
     },
 
     update (dt) {
-        if(Global.frameIndex % 30 == 0) {
+        if (Global.stopFrame == false && Global.frameIndex % this.speed == 0) {
             this.move();
         }
     },
@@ -41,6 +39,7 @@ cc.Class({
             this.destroySelf();
             return;
         }
+        this.node.wayIndex =  this.pointIndex;
         var pos = this.canvas.convertToNodeSpaceAR(cc.v2(Global.marginW + this.waypoints[this.pointIndex].w * Global.unitLength, this.waypoints[this.pointIndex].h * Global.unitLength));
         this.node.setPosition(pos);
     },

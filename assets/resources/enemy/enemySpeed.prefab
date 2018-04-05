@@ -10,7 +10,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "enemy",
+    "_name": "enemySpeed",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -35,9 +35,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 14,
-      "g": 40,
-      "b": 228,
+      "r": 11,
+      "g": 252,
+      "b": 184,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -214,9 +214,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "82b82b3b-4ae0-4e89-b424-a2dbbe82e9bf"
+      "__uuid__": "d8afab23-f622-469d-a565-3b6c6af48599"
     },
-    "fileId": "836AS0wcVBNa6jKlX0yAJ2",
+    "fileId": "a9t45k6FZIbo9ZdcexO+zU",
     "sync": false
   },
   {
@@ -267,9 +267,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "82b82b3b-4ae0-4e89-b424-a2dbbe82e9bf"
+      "__uuid__": "d8afab23-f622-469d-a565-3b6c6af48599"
     },
-    "fileId": "f0+3xF+ZtGe79Lvn50hZya",
+    "fileId": "3b+MFbv31FXZIChMTtsHEi",
     "sync": false
   },
   {
@@ -307,7 +307,7 @@
     },
     "_enabled": true,
     "health": "100",
-    "speed": "30"
+    "speed": "15"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -315,9 +315,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "82b82b3b-4ae0-4e89-b424-a2dbbe82e9bf"
+      "__uuid__": "d8afab23-f622-469d-a565-3b6c6af48599"
     },
-    "fileId": "c4P0vfzFZNP6A1rSSScmjA",
+    "fileId": "31uGTYHXNJl6t+WSgwxSD5",
     "sync": false
   }
 ]

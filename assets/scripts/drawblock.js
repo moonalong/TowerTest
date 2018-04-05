@@ -4,7 +4,7 @@ var drawblock = cc.Class({
     extends: cc.Component,
 
     properties: {
-
+        
     },
 
     statics: {
@@ -51,7 +51,7 @@ var drawblock = cc.Class({
         }
 
         //生成路径3
-        for (let w = 99; w > 8; w--) {
+        for (let w = 99; w > 11; w--) {
             let h = 52;
             drawblock.wayPoints.push({
                 w:w,

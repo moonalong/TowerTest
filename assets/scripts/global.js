@@ -13,4 +13,5 @@ global.marginW = 8;
 //y方向的边距
 global.marginH = 0;
 
-global.stopMove = false;
+//全局帧是否自增
+global.stopFrame = false;

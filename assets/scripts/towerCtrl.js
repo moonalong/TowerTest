@@ -6,7 +6,7 @@ var towerCtrl = cc.Class({
     extends: cc.Component,
 
     properties: {
-       
+        attackRate: cc.Integer, //攻击频率
     },
 
     statics: {
@@ -43,7 +43,7 @@ var towerCtrl = cc.Class({
         }
 
         self.node.on('touchstart', function ( event ) {  
-            Global.stopMove = true;
+            Global.stopFrame = true;
             // cc.log("A start");
             // if (cc.rectContainsPoint(self.heroZhuge.getBoundingBoxToWorld(), event.getLocation())) {  
             //     //self.skillBg.active = true;
@@ -58,7 +58,7 @@ var towerCtrl = cc.Class({
 
 
         self.node.on('touchmove', function ( event ) {  
-            Global.stopMove = true;
+            Global.stopFrame = true;
             // cc.log("A move");
             // let position = event.getLocation();
             
@@ -75,7 +75,7 @@ var towerCtrl = cc.Class({
         });
 
         self.node.on('touchend', function ( event ) {  
-            Global.stopMove = false;
+            Global.stopFrame = false;
             // let xMove = self.xRelative;
             // let yMove = self.yRelative;
 
@@ -94,9 +94,18 @@ var towerCtrl = cc.Class({
 
             // self.skillBg.active = false;
             // self.skill.active = false;   
+
+            
             
         });
 
+        //攻击范围
+        self.range = this.node.getChildByName("range");
+        var ctx = self.range.getComponent(cc.Graphics);
+        ctx.strokeColor = cc.Color.BLUE;
+        ctx.circle(self.range.x, self.range.y, Math.sqrt(self.attackDistance) * Global.unitLength);
+        ctx.stroke();
+        
 
     },
 
@@ -105,21 +114,26 @@ var towerCtrl = cc.Class({
     },
 
     update (dt) {
-        this.setAttackTarget();
+        if (Global.stopFrame === false) {
+            this.setAttackTarget();
+        }
+        
     },
 
     setAttackTarget: function () {
         let enemyFactory = require("enemyFactory");
 
         //设置攻击目标
-        if (enemyFactory.waveList.length > 0 && !!!self.attckTarget) {
-            for (let i = 0; i < enemyFactory.waveList.length; i++) {
+        if (enemyFactory.waveList.length > 0) { // && !!!self.attckTarget
+            for (let i = enemyFactory.waveList.length - 1; i >= 0 ; i--) {  
                 let enemyNode = enemyFactory.waveList[i];
                 if(!!enemyNode) {
                     let x = Math.ceil(Math.abs(self.node.position.x - enemyNode.x)/Global.unitLength);
                     let y = Math.ceil(Math.abs(self.node.position.y - enemyNode.y)/Global.unitLength);
                     if(x*x + y*y < self.attackDistance) {
                         self.attckTarget = enemyNode;
+                        cc.log("距离:"+self.attckTarget);
+                        this.attack();
                         cc.log("曼哈顿x: "+x+" 曼哈顿y: "+y);
                         break;
                     }
@@ -129,24 +143,27 @@ var towerCtrl = cc.Class({
         }
 
         //判断攻击目标是否在射程范围里, self.attckTarget.parent用于判断该节点是否被销毁
-        if(!!self.attckTarget && self.attckTarget.parent) {
-            let x = Math.ceil(Math.abs(self.node.position.x - self.attckTarget.x)/Global.unitLength);
-            let y = Math.ceil(Math.abs(self.node.position.y - self.attckTarget.y)/Global.unitLength);
-            if(x*x + y*y > self.attackDistance) {
-                self.attckTarget = null;
-                cc.log("目标丢失，切换新的目标");
-            } else {
-                this.attack();
-            }
-        } else if(!!self.attckTarget && !!!self.attckTarget.parent) {
-            self.attckTarget = null;
-        }
+        // if(!!self.attckTarget && self.attckTarget.parent) {
+        //     let x = Math.ceil(Math.abs(self.node.position.x - self.attckTarget.x)/Global.unitLength);
+        //     let y = Math.ceil(Math.abs(self.node.position.y - self.attckTarget.y)/Global.unitLength);
+        //     if(x*x + y*y > self.attackDistance) {
+        //         self.attckTarget = null;
+        //         cc.log("目标丢失，切换新的目标");
+        //     } else {
+        //         //cc.log("index: " + self.attckTarget.wayIndex);
+        //         this.attack();
+        //     }
+        // } else if(!!self.attckTarget && !!!self.attckTarget.parent) {
+        //     self.attckTarget = null;
+        // }
+
+
 
     },
 
     attack: function () {
         //实例化子弹
-        if(!!self.attckTarget && Global.frameIndex % 30 == 0) {
+        if(Global.stopFrame == false && !!self.attckTarget && Global.frameIndex % self.attackRate == 0) {
            
             cc.loader.loadRes("skill/skillbullet", function (err, prefab) {
                 var newNode = cc.instantiate(prefab);

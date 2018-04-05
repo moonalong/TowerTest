@@ -1,11 +1,11 @@
-
+const Global  = require("global");
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
         hurt: {
-            default: 2,
+            default: 5,
             type: cc.Integer
         }
     },
@@ -25,7 +25,7 @@ cc.Class({
             let yVector = this.attckTarget.y - this.node.y;
             let normalVec = cc.pNormalize(cc.v2(xVector, yVector));
             
-            let action = cc.moveBy(1, cc.v2(normalVec.x*50, normalVec.y*50))   
+            let action = cc.moveBy(1, cc.v2(normalVec.x*Global.unitLength*5, normalVec.y*Global.unitLength*5))   
             this.node.runAction(action);
 
             let distance = cc.pDistance(this.node.position, this.attckTarget.position);
