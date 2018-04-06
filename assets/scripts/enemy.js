@@ -16,9 +16,11 @@ cc.Class({
 
     onLoad () {
         this.healthNode = this.node.getChildByName("health");
+        
     },
 
     start () {
+        this.startHealth = this.health;
         this.waypoints = Drawblock.wayPoints;       
         this.pointIndex = 0;
         this.canvas = cc.find("Canvas");
@@ -46,7 +48,7 @@ cc.Class({
 
     takeDemage: function (_hurt) {
         this.health = this.health - _hurt;
-        this.healthNode.getComponent(cc.ProgressBar).progress = this.health / 100;
+        this.healthNode.getComponent(cc.ProgressBar).progress = this.health / this.startHealth;
         if(this.health <= 0) {
            //敌人死亡
            this.destroySelf();

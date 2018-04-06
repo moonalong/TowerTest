@@ -71,7 +71,36 @@ var enemyFactory = cc.Class({
                     enemyFactory.waveList.push(newNode);
                 });
             })(self.index)
+        } else if(Global.frameIndex % (60*4) == 0 && Global.frameIndex > (60*4)*6 && Global.frameIndex < (60*4)*9 + 1) {
+            self.index = self.index + 1;
+            (function (index) {
+                cc.loader.loadRes("enemy/enemySpeedUp", function (err, prefab) {
+                    if(!!err) {
+                        console.error(err);    
+                    }
+                    let newNode = cc.instantiate(prefab);
+                    newNode.index = index + 1;
+                    newNode.wayIndex = 0;
+                    cc.find("Canvas").addChild(newNode);
+                    enemyFactory.waveList.push(newNode);
+                });
+            })(self.index)
+        } else if(Global.frameIndex === (60*4)*10 + 1) {
+            self.index = self.index + 1;
+            (function (index) {
+                cc.loader.loadRes("enemy/enemyBig", function (err, prefab) {
+                    if(!!err) {
+                        console.error(err);    
+                    }
+                    let newNode = cc.instantiate(prefab);
+                    newNode.index = index + 1;
+                    newNode.wayIndex = 0;
+                    cc.find("Canvas").addChild(newNode);
+                    enemyFactory.waveList.push(newNode);
+                });
+            })(self.index)
         }
+
 
         //按照距离终点的远近排序
         this.quickSort(enemyFactory.waveList, 0, enemyFactory.waveList.length - 1);
