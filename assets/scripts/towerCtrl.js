@@ -1,7 +1,7 @@
 
 const Global  = require("global");
 
-var self = null;
+
 var towerCtrl = cc.Class({
     extends: cc.Component,
 
@@ -21,7 +21,7 @@ var towerCtrl = cc.Class({
     },
 
     onLoad () {
-        self = this;
+        let self = this;
         self.physicsManager = cc.director.getPhysicsManager();
         self.physicsManager.enabled = true;
         self.attckTarget = null; //攻击的目标
@@ -110,23 +110,26 @@ var towerCtrl = cc.Class({
     },
 
     start () {
-
+        
     },
 
     update (dt) {
         if (Global.stopFrame === false) {
+            cc.log(Global.frameIndex);
             this.setAttackTarget();
         }
         
     },
 
     setAttackTarget: function () {
+        let self = this;
         let enemyFactory = require("enemyFactory");
 
         //设置攻击目标
         if (enemyFactory.waveList.length > 0) { // && !!!self.attckTarget
             for (let i = enemyFactory.waveList.length - 1; i >= 0 ; i--) {  
                 let enemyNode = enemyFactory.waveList[i];
+                
                 if(!!enemyNode) {
                     let x = Math.ceil(Math.abs(self.node.position.x - enemyNode.x)/Global.unitLength);
                     let y = Math.ceil(Math.abs(self.node.position.y - enemyNode.y)/Global.unitLength);
@@ -163,6 +166,7 @@ var towerCtrl = cc.Class({
 
     attack: function () {
         //实例化子弹
+        let self = this;
         if(Global.stopFrame == false && !!self.attckTarget && Global.frameIndex % self.attackRate == 0) {
            
             cc.loader.loadRes("skill/skillbullet", function (err, prefab) {
