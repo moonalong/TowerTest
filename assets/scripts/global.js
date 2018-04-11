@@ -5,10 +5,10 @@ var global = module.exports;
 global.frameIndex = 0;
 
 //单位方格边长
-global.unitLength = 10;
+global.unitLength = 16;
 
 //x方向的边距
-global.marginW = 8;
+global.marginW = 0;
 
 //y方向的边距
 global.marginH = 0;

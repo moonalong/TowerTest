@@ -32,15 +32,19 @@ cc.Class({
         
 
         this.node.on('touchstart', function ( event ) {  
-            Global.stopFrame = true;       
+           
             let touchNode = self.getTouchNode(event.getLocation(), self.node);
             
             if(!!touchNode && touchNode.name == "zhugeliang") {
+                cc.log(1)
+                Global.stopFrame = true;       
                 self.hero = touchNode;
                 self.skill.active = true;
                 self.skill.setPosition(touchNode.x, touchNode.y);
                 self.skill.setAnchorPoint(0,0.5);
             } else if(!!touchNode && touchNode.name == "zhaoyun") {
+                cc.log(2)
+                Global.stopFrame = true;       
                 self.hero = touchNode;
                 self.skillRange.active = true;
                 self.skillRange.setPosition(touchNode.x,touchNode.y);
@@ -57,7 +61,6 @@ cc.Class({
         });
 
         this.node.on('touchmove', function ( event ) {  
-            Global.stopFrame = true;
             let position = event.getLocation();    
             if(!!self.hero && self.hero.name == "zhugeliang") {
                 
@@ -222,6 +225,7 @@ cc.Class({
                 for (let i = 0; i < this.node.childrenCount; i++) {
                     let child = this.node.children[i];
                     if(child.name == msg.heroName) {
+                        cc.log("复现: "+Global.frameIndex);
                         if(msg.heroName == "zhugeliang") {
                             func(msg.normalVec, child);
                         } else if(msg.heroName == "zhaoyun") {

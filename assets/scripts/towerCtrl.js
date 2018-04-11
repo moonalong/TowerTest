@@ -25,7 +25,7 @@ var towerCtrl = cc.Class({
         self.physicsManager = cc.director.getPhysicsManager();
         self.physicsManager.enabled = true;
         self.attckTarget = null; //攻击的目标
-        self.attackDistance = 16*16 + 32*32; //攻击范围（曼哈顿距离）
+        self.attackDistance = 5*5 + 9*9; //攻击范围（曼哈顿距离）
 
         self.canvas = cc.find("Canvas");
         self.skillBg = cc.find("Canvas/skillbg");
@@ -130,9 +130,9 @@ var towerCtrl = cc.Class({
                 let enemyNode = enemyFactory.waveList[i];
                 
                 if(!!enemyNode) {
-                    let x = Math.ceil(Math.abs(self.node.position.x - enemyNode.x)/Global.unitLength);
-                    let y = Math.ceil(Math.abs(self.node.position.y - enemyNode.y)/Global.unitLength);
-                    if(x*x + y*y < self.attackDistance) {
+                    let x = Math.floor(Math.abs(self.node.position.x - enemyNode.x)/Global.unitLength);
+                    let y = Math.floor(Math.abs(self.node.position.y - enemyNode.y)/Global.unitLength);
+                    if(x*x + y*y <= self.attackDistance) {
                         self.attckTarget = enemyNode;
                         this.attack();
                         //cc.log("曼哈顿x: "+x+" 曼哈顿y: "+y);
